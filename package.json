@@ -1,0 +1,30 @@
+{
+  "name": "virtual-keyboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "lint": "eslint script.js",
+    "lint:fix": "eslint script.js --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PavelZaharov1987/virtual-keyboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PavelZaharov1987/virtual-keyboard/issues"
+  },
+  "homepage": "https://github.com/PavelZaharov1987/virtual-keyboard#readme",
+  "dependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-html": "^6.0.0",
+    "eslint-plugin-import": "^2.20.2"
+  },
+  "engines": {
+    "node": "^8.10.0 || ^10.13.0 || >=11.10.1"
+  }
+}
