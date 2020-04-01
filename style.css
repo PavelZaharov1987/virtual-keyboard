@@ -1,0 +1,23 @@
+.wrapper {
+    
+}
+.rowFirst, .rowSecond, .rowThird, .rowFourth, .rowFifth {
+    display: flex;
+    justify-content: space-between;
+    width: 630px;
+    margin: 0 auto;
+}
+
+.key {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 40px; */
+    height: 40px;
+    padding: 0 15px;
+    border: 1px solid #000;
+}
+
+.key .eng span:last-child {
+    display: none;
+}
