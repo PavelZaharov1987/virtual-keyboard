@@ -1,11 +1,17 @@
-.wrapper {
-    
+.textarea {
+    display: block;
+    width: 630px;
+    margin: 0 auto;
 }
+
+.keyboard {
+    width: 630px;
+    margin: 0 auto;
+}
+
 .rowFirst, .rowSecond, .rowThird, .rowFourth, .rowFifth {
     display: flex;
     justify-content: space-between;
-    width: 630px;
-    margin: 0 auto;
 }
 
 .key {
@@ -16,9 +22,10 @@
     height: 40px;
     padding: 0 15px;
     border: 1px solid #000;
+    cursor: pointer;
 }
 
-.key.bg {
+.key.background {
     background-color: #000;
     color: #fff;
 }
