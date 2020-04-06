@@ -30,14 +30,6 @@
     color: #fff;
 }
 
-.key .eng span:last-child {
-    display: none;
-}
-
-.key .rus span:last-child {
-    display: none;
-}
-
 .hidden {
     display: none;
 }
