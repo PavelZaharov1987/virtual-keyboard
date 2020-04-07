@@ -14,7 +14,7 @@ const keyBoard = {
     Backquote: ['`', '~', 'ё', 'Ё'], Digit1: ['1', '!', '1', '!'], Digit2: ['2', '@', '2', '"'], Digit3: ['3', '#', '3', '№'], Digit4: ['4', '$', '4', ';'], Digit5: ['5', '%', '5', '%'], Digit6: ['6', '^', '6', ':'], Digit7: ['7', '&', '7', '?'], Digit8: ['8', '*', '8', '*'], Digit9: ['9', '(', '9', '('], Digit0: ['0', ')', '0', ')'], Minus: ['-', '_', '-', '_'], Equal: ['=', '+', '=', '+'], Backspace: ['Backspace', 'Backspace', 'Backspace', 'Backspace'],
   },
   rowSecond: {
-    Tab: ['Tab', 'Tab', 'Tab', 'Tab'], KeyQ: ['q', 'Q', 'й', 'Й'], KeyW: ['w', 'W', 'ц', 'Ц'], KeyE: ['e', 'E', 'у', 'У'], KeyR: ['r', 'R', 'к', 'К'], KeyT: ['t', 'T', 'е', 'Е'], KeyY: ['y', 'Y', 'н', 'Н'], KeyU: ['u', 'U', 'г', 'Г'], KeyI: ['i', 'I', 'ш', 'Ш'], KeyO: ['o', 'O', 'щ', 'Щ'], KeyP: ['p', 'P', 'з', 'З'], BracketLeft: ['[', '{', 'х', 'Х'], BracketRight: [']', '}', 'ъ', 'Ъ'], Backslash: ['\\', '|', '\\', '/'],
+    Tab: ['Tab', 'Tab', 'Tab', 'Tab'], KeyQ: ['q', 'Q', 'й', 'Й'], KeyW: ['w', 'W', 'ц', 'Ц'], KeyE: ['e', 'E', 'у', 'У'], KeyR: ['r', 'R', 'к', 'К'], KeyT: ['t', 'T', 'е', 'Е'], KeyY: ['y', 'Y', 'н', 'Н'], KeyU: ['u', 'U', 'г', 'Г'], KeyI: ['i', 'I', 'ш', 'Ш'], KeyO: ['o', 'O', 'щ', 'Щ'], KeyP: ['p', 'P', 'з', 'З'], BracketLeft: ['[', '{', 'х', 'Х'], BracketRight: [']', '}', 'ъ', 'Ъ'], Backslash: ['\\', '|', '\\', '/'], Delete: ['Del', 'Del', 'Del', 'Del'],
   },
   rowThird: {
     CapsLock: ['CapsLock', 'CapsLock', 'CapsLock', 'CapsLock'], KeyA: ['a', 'A', 'ф', 'Ф'], KeyS: ['s', 'S', 'ы', 'Ы'], KeyD: ['d', 'D', 'в', 'В'], KeyF: ['f', 'F', 'а', 'А'], KeyG: ['g', 'G', 'п', 'П'], KeyH: ['h', 'H', 'р', 'Р'], KeyJ: ['j', 'J', 'о', 'О'], KeyK: ['k', 'K', 'л', 'Л'], KeyL: ['l', 'L', 'д', 'Д'], Semicolon: [';', ':', 'ж', 'Ж'], Quote: ["'", '"', 'э', 'Э'], Enter: ['Enter', 'Enter', 'Enter', 'Enter'],
@@ -69,6 +69,10 @@ const addClickBackspaceHandler = () => {
   textArea.setRangeText('', textArea.selectionStart - 1, textArea.selectionEnd);
 };
 
+const addClickDelHandler = () => {
+  textArea.setRangeText('', textArea.selectionStart, textArea.selectionEnd + 1);
+};
+
 const addClickSpaceHandler = () => {
   // const textArea = document.querySelector('textarea');
   textArea.value += ' ';
@@ -82,6 +86,32 @@ const addClickEnterHandler = () => {
 const addClickSpecialKeysHandler = () => {
   // const textArea = document.querySelector('textarea');
   textArea.value += '';
+};
+
+const arrowLeft = (elm) => {
+  elm.selectionStart = elm.selectionEnd -= 1;
+};
+
+const arrowRight = (elm) => {
+  elm.selectionStart = elm.selectionEnd += 1;
+};
+
+const arrowDown = (elm) => {
+  let pos = elm.selectionEnd;
+  const prevLine = elm.value.lastIndexOf('\n', pos);
+  const nextLine = elm.value.indexOf('\n', pos + 1);
+  if (nextLine === -1) return;
+  pos -= prevLine;
+  elm.selectionStart = elm.selectionEnd = nextLine + pos;
+};
+
+const arrowUp = (elm) => {
+  let pos = elm.selectionEnd;
+  const prevLine = elm.value.lastIndexOf('\n', pos);
+  const TwoBLine = elm.value.lastIndexOf('\n', prevLine - 1);
+  if (prevLine === -1) return;
+  pos -= prevLine;
+  elm.selectionStart = elm.selectionEnd = TwoBLine + pos;
 };
 
 let capsLock = true;
@@ -105,7 +135,7 @@ const addChangeCapslockUppercase = (e) => {
       });
       capsLock = true;
     }
-  } 
+  }
 };
 
 const addChangeShiftUppercase = (e) => {
@@ -145,18 +175,26 @@ const addChangeLanguage = (e) => {
     });
     // language = false;
   }
-}
+};
 
 const updateValueFromRealKeyBoard = (e) => {
-  if (e.key.length === 1) {
+  if (e.code !== 'Enter' && e.code !== 'Backspace' && e.code !== 'ArrowLeft' && e.code !== 'ArrowUp' && e.code !== 'ArrowDown' && e.code !== 'ArrowRight' && e.code !== 'Delete') {
     e.preventDefault();
-    textArea.value += e.key;
+  }
+  const classKey = document.querySelector(`.${e.code}`);
+  if (e.key.length === 1) {
+    if (document.querySelector(`.${e.code} .eng`).classList.contains('hidden')) {
+      textArea.value += classKey.textContent[2];
+    } else {
+      textArea.value += e.key;
+    }
   }
 };
 
 const updateValueFromMouse = (e) => {
   const keyTab = e.target.textContent.substring(0, 3);
   const KeyBackspace = e.target.textContent.substring(0, 9);
+  const keyDel = e.target.textContent.substring(0, 3);
   const KeySpace = e.target.textContent.substring(0, 5);
   const KeyEnter = e.target.textContent.substring(0, 5);
   const KeyShift = e.target.textContent.substring(0, 5);
@@ -180,6 +218,10 @@ const updateValueFromMouse = (e) => {
       addClickEnterHandler();
     } else if (keyCapslock === 'CapsLock' || keyUp === 'Up' || keyLeft === 'Left' || keyDown === 'Down' || keyRight === 'Right' || KeyShift === 'Shift' || keyCtrl === 'Ctrl' || keyWin === 'Win' || keyAlt === 'Alt' || keyTarget === 'Ctrl' || keyTarget === 'Win' || keyTarget === 'Alt' || keyTarget === 'Shift' || keyTarget === 'CapsLock' || keyTarget === 'Up' || keyTarget === 'Left' || keyTarget === 'Down' || keyTarget === 'Right') {
       addClickSpecialKeysHandler();
+    } else if (keyDel === 'Del' || keyTarget === 'Del') {
+      addClickDelHandler();
+    } else if (document.querySelector('.key .eng').classList.contains('hidden')) {
+      textArea.value += e.target.textContent[2];
     } else {
       textArea.value += e.target.querySelector('span span').textContent;
     }
@@ -215,6 +257,26 @@ document.querySelector('.keyboard').addEventListener('mousedown', (event) => {
   addChangeCapslockUppercase(event);
   updateValueFromMouse(event);
   addChangeShiftUppercase(event);
+});
+
+document.querySelector('.ArrowLeft').addEventListener('click', () => {
+  textArea.focus();
+  arrowLeft(textArea);
+});
+
+document.querySelector('.ArrowUp').addEventListener('click', () => {
+  textArea.focus();
+  arrowUp(textArea);
+});
+
+document.querySelector('.ArrowDown').addEventListener('click', () => {
+  textArea.focus();
+  arrowDown(textArea);
+});
+
+document.querySelector('.ArrowRight').addEventListener('click', () => {
+  textArea.focus();
+  arrowRight(textArea);
 });
 
 document.querySelector('.wrapper').addEventListener('mouseup', (event) => {

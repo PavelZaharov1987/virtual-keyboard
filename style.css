@@ -1,33 +1,56 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+}
+
 .textarea {
     display: block;
-    width: 630px;
+    width: 670px;
     margin: 0 auto;
 }
 
 .keyboard {
-    width: 630px;
+    width: 670px;
     margin: 0 auto;
 }
 
 .rowFirst, .rowSecond, .rowThird, .rowFourth, .rowFifth {
     display: flex;
     justify-content: space-between;
+    margin-top: 5px;
+}
+
+.rowFifth .key:nth-child(10n-6) {
+    width: 249px;
+    color: #fff;
+}
+
+.rowFirst .key:last-child.background {
+    color: #000;
+    border-radius: 10px;
+}
+
+.rowFifth .key:nth-child(10n-6).background {
+    color: #000;
+    border-radius: 10px;
 }
 
 .key {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* width: 40px; */
+    min-width: 40px;
     height: 40px;
-    padding: 0 15px;
     border: 1px solid #000;
     cursor: pointer;
+    transition-duration: 0.5s;
 }
 
 .key.background {
     background-color: #000;
     color: #fff;
+    border-radius: 50%;
+    transition-duration: 0.5s;
 }
 
 .hidden {
