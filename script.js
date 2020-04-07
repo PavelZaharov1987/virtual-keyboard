@@ -59,6 +59,10 @@ for (const row in keyBoard) {
   }
 }
 
+const p = document.createElement('p');
+document.querySelector('.wrapper').append(p);
+document.querySelector('p').innerText = "Данная клавиатура выполнена для Windows. Для переключения языка используйте ctrl+alt.";
+
 const addClickTabHandler = () => {
   // const textArea = document.querySelector('textarea');
   textArea.value += '  ';
